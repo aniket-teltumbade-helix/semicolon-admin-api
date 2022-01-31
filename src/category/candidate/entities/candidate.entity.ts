@@ -4,7 +4,7 @@ import { Auth } from 'src/auth/auth.entity';
 @Table
 export class Candidate extends Model {
     @Column
-    cadidate_id: string;
+    candidate_id: string;
 
     @Column
     name: string;

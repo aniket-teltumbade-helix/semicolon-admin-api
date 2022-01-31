@@ -9,6 +9,7 @@ import { mailerConfig } from './config/mailer';
 import { HelixMailerService } from './helix-mailer/helix-mailer.service';
 import { HelixMailerController } from './helix-mailer/helix-mailer.controller';
 import { CategoryModule } from './category/category.module';
+import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CategoryModule } from './category/category.module';
     ProgModule,
     AuthModule,
     CategoryModule,
+    TestModule,
   ],
   controllers: [AppController, HelixMailerController],
   providers: [AppService, HelixMailerService],

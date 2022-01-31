@@ -12,13 +12,13 @@ export class CandidateService {
 
   create(createCandidateDto: any) {
     let createCandidateWithId = { ...createCandidateDto, candidate_id: uuid.v4() }
-    return this.candidateRepository.create(createCandidateWithId)
+    return this.candidateRepository.create(createCandidateWithId).then(res => { return res }).catch(err => { return err });
   }
 
   findOne(candidate_id: string, user_id: string) {
-    return this.candidateRepository.findOne({ where: { candidate_id: candidate_id, user_id: user_id } })
+    return this.candidateRepository.findOne({ where: { candidate_id: candidate_id, user_id: user_id } }).then(res => { return res }).catch(err => { return err });
   }
   delete(candidate_id: string) {
-    return this.candidateRepository.destroy({ where: { candidate_id } })
+    return this.candidateRepository.destroy({ where: { candidate_id } }).then(res => { return res }).catch(err => { return err });
   }
 }
