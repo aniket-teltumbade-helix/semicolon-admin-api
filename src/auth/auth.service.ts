@@ -17,9 +17,9 @@ export class AuthService {
 
   createUser(user) {
     user = { user_id: uuid.v4(), ...user };
-    return this.usersRepository.create(user)
+    return this.usersRepository.save(user)
   }
-  async findUser(user): Promise<Auth> {
-    return this.usersRepository.findOne({ where: user });
+  findUser(user): Promise<Auth> {
+    return this.usersRepository.find({ where: { email: user.email, password: user.password } }).then(res => res).catch(err => err);
   }
 }

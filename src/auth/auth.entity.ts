@@ -21,6 +21,6 @@ export class Auth {
   @Column({ type: 'varchar', nullable: false })
   last_name: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar' })
   test_name: string;
 }

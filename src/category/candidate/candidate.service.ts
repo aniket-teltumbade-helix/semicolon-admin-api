@@ -32,20 +32,33 @@ export class CandidateService {
     return this.candidateRepository.delete({ candidate_id }).then(res => { return res }).catch(err => { return err });
   }
 
-  invite(candidate_id: string, test_id: string) {
+  invite(candidate_id: string, test_id: string, origin: string, route: string) {
     return this.candidateRepository.findOne({ where: { candidate_id } }).then(res => {
       if (res) {
-        return this.inviteRepository.manager.save({
+        return this.inviteRepository.save({
           candidate: candidate_id,
           test_id,
           invite_id: uuid.v4(),
-          pin: Math.floor(100000 + Math.random() * 900000),
+          magic_string: uuid.v4(),
         }).then(resInvite => {
-          console.log(resInvite);
-          return resInvite
+          return this.mailerService.sendMail({
+            to: res.email,
+            from: 'noreply@helixstack.in',
+            subject: 'Helix Contest Invitation',
+            template: 'invite',
+            context: {
+              name: res.name,
+              link: `${origin}/${route}/${resInvite.magic_string}`
+            },
+          }).then(resMail => {
+            return resMail;
+          }).catch(resErr => console.log(resErr))
         }).catch(err => {
           return err
         });
+      }
+      else {
+        return { err: 'Something went Wrong' }
       }
     })
   }

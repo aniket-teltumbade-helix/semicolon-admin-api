@@ -8,12 +8,12 @@ export class Invite {
     @PrimaryColumn()
     invite_id: string;
 
-    @Column({ type: 'int', nullable: false })
-    pin: number;
+    @Column({ type: 'varchar', nullable: false })
+    magic_string: string;
 
-    @OneToOne(() => Candidate, candidate => candidate.candidate_id)
-    candidate: Candidate;
+    @Column()
+    candidate: string;
 
-    @OneToOne(() => Auth, auth => auth.user_id)
-    test_id: Auth;
+    @Column()
+    test_id: string;
 }

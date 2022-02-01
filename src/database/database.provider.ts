@@ -14,4 +14,5 @@ export const databaseProviders = TypeOrmModule.forRoot({
   database: process.env.DATABASE_NAME,
   entities: [Auth, Program, Mcq, Candidate, Invite],
   synchronize: true,
+  logging: true
 })

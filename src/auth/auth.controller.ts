@@ -20,14 +20,17 @@ export class AuthController {
   }
   @Post('/login')
   loginUser(@Body() user: VerifyAuthDTO) {
+    console.log(user);
+
     return this.usersService
       .findUser({
         email: user.email,
         password: user.password,
       })
       .then((res) => {
-        if (res) return { msg: { user_id: res.user_id } };
-        else return { err: 'Something went wrong, try again!' };
+        console.log(res);
+
+        return { user_id: res[0].user_id };
       })
       .catch((err) => {
         return { err };
