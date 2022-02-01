@@ -1,18 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateMcqDto } from './dto/create-mcq.dto';
-import { CreateMcqsDto } from './dto/create-mcqs.dto';
 import { Mcq } from './entities/mcq.entity';
 
 
 @Injectable()
 export class McqService {
   constructor(
-    @Inject('MCQ_REPOSITORY')
-    private mcqRepository: typeof Mcq,
+    @InjectRepository(Mcq)
+    private mcqRepository: Repository<Mcq>,
   ) { }
 
   create(createMcqDto: CreateMcqDto) {
-    return this.mcqRepository.create(createMcqDto).then(res => { return res }).catch(err => { return err });
+    return this.mcqRepository.save(createMcqDto).then(res => { return res }).catch(err => { return err });
   }
 
   findOne(user_id: string, mcq_id: string) {
@@ -20,13 +21,15 @@ export class McqService {
   }
 
   bulkCreate(createMcqsDto: any) {
-    return this.mcqRepository.bulkCreate(createMcqsDto).then(res => { return res }).catch(err => { return err });
+    for (let i = 0; i < createMcqsDto.length; i++) {
+      return this.mcqRepository.save(createMcqsDto[i]).then(res => { return res }).catch(err => { return err });
+    }
   }
   delete(mcq_id: string) {
-    return this.mcqRepository.destroy({ where: { mcq_id } }).then(res => { return res }).catch(err => { return err });
+    return this.mcqRepository.delete({ mcq_id }).then(res => { return res }).catch(err => { return err });
   }
 
   getAllByUsers(user_id: string) {
-    return this.mcqRepository.findAll({ where: { user_id: user_id } }).then(res => { return res }).catch(err => { return err });
+    return this.mcqRepository.find({ where: { user_id: user_id } }).then(res => { return res }).catch(err => { return err });
   }
 }

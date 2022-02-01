@@ -1,5 +1,4 @@
 export class CreateMcqDto {
-    user_id: string;
     mcq_id: string;
     question_number: number;
     question: string;

@@ -1,25 +1,26 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Table
-export class Auth extends Model {
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+@Entity()
+export class Auth {
+  @Column({ type: 'varchar', nullable: false })
+  @PrimaryColumn()
+  user_id: string;
+
+  @Column({ type: 'varchar', nullable: false })
   username: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: 'varchar', nullable: false })
   email: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: 'varchar', nullable: false })
   first_name: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: 'varchar', nullable: false })
   last_name: string;
 
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: 'varchar', nullable: false })
   test_name: string;
-
-  @Column({ type: DataType.STRING, unique: true, allowNull: false, primaryKey: true })
-  user_id: string;
 }

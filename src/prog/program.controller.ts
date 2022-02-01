@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Prog } from './prog.entity';
-import { ProgService } from './prog.service';
+import { Program } from './program.entity';
+import { ProgramService } from './program.service';
 
 @Controller()
-export class ProgController {
-  constructor(private readonly progService: ProgService) { }
+export class ProgramController {
+  constructor(private readonly progService: ProgramService) { }
 
   @Post('/add')
-  addProg(@Body() prog: Prog): Promise<any> {
+  addProg(@Body() prog: Program): Promise<any> {
     return this.progService
       .createProg(prog).then(res => { return res }).catch(err => { return err });
   }

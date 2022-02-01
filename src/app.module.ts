@@ -2,14 +2,19 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { ProgModule } from './prog/prog.module';
+import { ProgModule } from './prog/program.module';
 import { routesConfig } from './config/routes';
 import { envConfig } from './config/environment';
 import { mailerConfig } from './config/mailer';
-import { HelixMailerService } from './helix-mailer/helix-mailer.service';
-import { HelixMailerController } from './helix-mailer/helix-mailer.controller';
 import { CategoryModule } from './category/category.module';
 import { TestModule } from './test/test.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Auth } from './auth/auth.entity';
+import { Candidate } from './category/candidate/entities/candidate.entity';
+import { Mcq } from './category/mcq/entities/mcq.entity';
+import { Program } from './prog/program.entity';
+import { Invite } from './category/candidate/entities/invite.entity';
+import { databaseProviders } from './database/database.provider';
 
 @Module({
   imports: [
@@ -20,8 +25,10 @@ import { TestModule } from './test/test.module';
     AuthModule,
     CategoryModule,
     TestModule,
+    TypeOrmModule.forFeature([Auth, Candidate, Mcq, Program, Invite]),
+    databaseProviders
   ],
-  controllers: [AppController, HelixMailerController],
-  providers: [AppService, HelixMailerService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule { }

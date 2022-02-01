@@ -1,39 +1,37 @@
-import { Table, Column, Model, ForeignKey, BelongsTo, DataType } from 'sequelize-typescript';
 import { Auth } from 'src/auth/auth.entity';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 
-@Table
-export class Mcq extends Model {
-    @Column({ type: DataType.STRING, allowNull: false })
+@Entity()
+export class Mcq {
+    @Column({ type: 'varchar', nullable: false })
+    @PrimaryColumn()
     mcq_id: string;
 
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: 'varchar', nullable: false })
     question_number: number;
 
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: 'varchar', nullable: false })
     question: string;
 
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: 'varchar', nullable: false })
     option1: string;
 
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: 'varchar', nullable: false })
     option2: string;
 
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: 'varchar', nullable: false })
     option3: string;
 
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: 'varchar', nullable: false })
     option4: string;
 
-    @Column({ type: DataType.STRING, allowNull: false })
+    @Column({ type: 'varchar', nullable: false })
     answer: string;
 
-    @Column({ type: DataType.INTEGER, allowNull: false })
+    @Column({ type: 'int', nullable: false })
     time: number;
 
-    @ForeignKey(() => Auth)
-    @Column({ type: DataType.STRING, allowNull: false })
-    user_id: string
-
-    @BelongsTo(() => Auth)
-    uuid: Auth
+    @OneToOne(() => Auth, auth => auth.user_id)
+    @JoinColumn()
+    user_id: Auth
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { McqService } from './mcq.service';
 import { CreateMcqDto } from './dto/create-mcq.dto';
 import * as uuid from 'uuid'

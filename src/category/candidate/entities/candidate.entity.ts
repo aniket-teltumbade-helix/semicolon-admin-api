@@ -1,25 +1,23 @@
-import { Table, Column, Model, ForeignKey, DataType, BelongsTo } from 'sequelize-typescript';
 import { Auth } from 'src/auth/auth.entity';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
-@Table
-export class Candidate extends Model {
-    @Column
+@Entity()
+export class Candidate {
+    @Column({ type: 'varchar', nullable: false })
+    @PrimaryColumn()
     candidate_id: string;
 
-    @Column
+    @Column({ type: 'varchar', nullable: false })
     name: string;
 
-    @Column
+    @Column({ type: 'varchar', nullable: false })
     email: string;
 
-    @Column
+    @Column({ type: 'int', nullable: false })
     number: number;
-    @Column
 
-    @ForeignKey(() => Auth)
-    @Column({ type: DataType.STRING, allowNull: false })
-    user_id: string
+    @OneToOne(() => Auth, auth => auth.user_id)
+    @Column({ type: 'varchar', nullable: false })
+    user_id: Auth
 
-    @BelongsTo(() => Auth)
-    uuid: Auth
 }
