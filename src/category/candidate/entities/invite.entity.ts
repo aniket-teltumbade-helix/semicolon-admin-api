@@ -1,6 +1,6 @@
 import { Candidate } from './candidate.entity';
 import { Auth } from "../../../auth/auth.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Invite {
@@ -11,9 +11,14 @@ export class Invite {
     @Column({ type: 'varchar', nullable: false })
     magic_string: string;
 
-    @Column()
-    candidate: string;
+    @Column({ type: 'tinyint', nullable: false, default: false })
+    visited: boolean;
 
-    @Column()
+    @ManyToOne(() => Candidate)
+    @JoinColumn({ name: 'candidate_id' })
+    candidate_id: string;
+
+    @ManyToOne(() => Auth)
+    @JoinColumn({ name: 'user_id' })
     test_id: string;
 }

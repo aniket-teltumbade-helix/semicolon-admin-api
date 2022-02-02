@@ -11,6 +11,7 @@ export class TestService {
     @InjectRepository(Auth)
     private usersRepository: Repository<Auth>,
   ) { }
+
   update(id: string, updateTestDto: UpdateTestDto) {
     return this.usersRepository.update({ user_id: id }, { test_name: updateTestDto.test_name })
   }

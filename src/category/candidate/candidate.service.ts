@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Get, Inject, Injectable, Res } from '@nestjs/common';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
 import { Candidate } from './entities/candidate.entity';
 import { Invite } from './entities/invite.entity';
@@ -40,7 +40,7 @@ export class CandidateService {
     return this.candidateRepository.findOne({ where: { candidate_id } }).then(res => {
       if (res) {
         return this.inviteRepository.save({
-          candidate: candidate_id,
+          candidate_id,
           test_id,
           invite_id: uuid.v4(),
           magic_string: uuid.v4(),
@@ -55,7 +55,7 @@ export class CandidateService {
               link: route ? `${origin}/${route}/${resInvite.magic_string}` : `${origin}/${resInvite.magic_string}`
             },
           }).then(resMail => {
-            return resMail;
+            return { test_id: resInvite.test_id, messageId: resMail.messageId };
           }).catch(resErr => console.log(resErr))
         }).catch(err => {
           return err
@@ -65,5 +65,16 @@ export class CandidateService {
         return errorMessage('NOT_FOUND', 'Something went wrong!')
       }
     })
+  }
+  startTest(magic_string: string) {
+    if (magic_string === '' || !magic_string) return errorMessage('BAD_REQUEST', 'Magic code is not valid')
+    return this.inviteRepository.findOne({ where: { magic_string } }).then(res => {
+      console.log(res);
+
+      if (res && !res.visited) {
+        return this.inviteRepository.update({ magic_string }, { visited: true }).then(resVisit => resVisit).catch(err => err)
+      }
+      else { return errorMessage('NOT_FOUND', 'Invitation link is invalid') }
+    }).catch(err => err)
   }
 }

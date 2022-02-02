@@ -1,5 +1,5 @@
 import { Auth } from 'src/auth/auth.entity';
-import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Candidate {
@@ -16,7 +16,7 @@ export class Candidate {
     @Column({ type: 'int', nullable: false })
     number: number;
 
-    @OneToOne(() => Auth, auth => auth.user_id)
+    @ManyToOne(() => Auth, auth => auth.user_id)
     @Column({ type: 'varchar', nullable: false })
     user_id: Auth
 
