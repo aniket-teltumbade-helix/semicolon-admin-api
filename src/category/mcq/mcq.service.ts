@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { errorMessage } from 'src/error';
 import { Repository } from 'typeorm';
 import { CreateMcqDto } from './dto/create-mcq.dto';
 import { Mcq } from './entities/mcq.entity';
@@ -12,11 +13,12 @@ export class McqService {
     private mcqRepository: Repository<Mcq>,
   ) { }
 
-  create(createMcqDto: CreateMcqDto) {
+  create(createMcqDto: any) {
     return this.mcqRepository.save(createMcqDto).then(res => { return res }).catch(err => { return err });
   }
 
   findOne(user_id: string, mcq_id: string) {
+    if ((!user_id || user_id === '') && (!mcq_id || mcq_id === '')) return errorMessage('BAD_REQUEST', 'user_id and mcq_id required!');
     return this.mcqRepository.findOne({ where: { user_id: user_id, mcq_id: mcq_id } }).then(res => { return res }).catch(err => { return err });
   }
 
@@ -26,10 +28,12 @@ export class McqService {
     }
   }
   delete(mcq_id: string) {
+    if (!mcq_id || mcq_id === '') return errorMessage('BAD_REQUEST', 'mcq_id is required!');
     return this.mcqRepository.delete({ mcq_id }).then(res => { return res }).catch(err => { return err });
   }
 
   getAllByUsers(user_id: string) {
+    if (!user_id || user_id === '') return errorMessage('BAD_REQUEST', 'user_id is required!');
     return this.mcqRepository.find({ where: { user_id: user_id } }).then(res => { return res }).catch(err => { return err });
   }
 }

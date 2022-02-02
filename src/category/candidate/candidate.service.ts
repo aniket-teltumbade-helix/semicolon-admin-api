@@ -6,6 +6,7 @@ import * as uuid from 'uuid';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { errorMessage } from 'src/error';
 
 @Injectable()
 export class CandidateService {
@@ -33,6 +34,9 @@ export class CandidateService {
   }
 
   invite(candidate_id: string, test_id: string, origin: string, route: string) {
+    if (!candidate_id && !test_id) {
+      return errorMessage('BAD_REQUEST', 'candidate_id and test_id is required!');
+    }
     return this.candidateRepository.findOne({ where: { candidate_id } }).then(res => {
       if (res) {
         return this.inviteRepository.save({
@@ -48,7 +52,7 @@ export class CandidateService {
             template: 'invite',
             context: {
               name: res.name,
-              link: `${origin}/${route}/${resInvite.magic_string}`
+              link: route ? `${origin}/${route}/${resInvite.magic_string}` : `${origin}/${resInvite.magic_string}`
             },
           }).then(resMail => {
             return resMail;
@@ -58,7 +62,7 @@ export class CandidateService {
         });
       }
       else {
-        return { err: 'Something went Wrong' }
+        return errorMessage('NOT_FOUND', 'Something went wrong!')
       }
     })
   }

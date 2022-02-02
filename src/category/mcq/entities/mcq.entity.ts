@@ -31,6 +31,9 @@ export class Mcq {
     @Column({ type: 'int', nullable: false })
     time: number;
 
+    @Column({ type: 'int', nullable: false })
+    points: number;
+
     @OneToOne(() => Auth, auth => auth.user_id)
     @JoinColumn()
     user_id: Auth

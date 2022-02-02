@@ -1,5 +1,4 @@
 export class CreateMcqDto {
-    mcq_id: string;
     question_number: number;
     question: string;
     option1: string;
@@ -7,5 +6,7 @@ export class CreateMcqDto {
     option3: string;
     option4: string;
     answer: string;
+    time: number;
+    points: number;
 }
 

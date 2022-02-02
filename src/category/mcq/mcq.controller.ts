@@ -3,6 +3,7 @@ import { McqService } from './mcq.service';
 import { CreateMcqDto } from './dto/create-mcq.dto';
 import * as uuid from 'uuid'
 import { CreateMcqsDto } from './dto/create-mcqs.dto';
+import { errorMessage } from 'src/error';
 
 @Controller('mcq')
 export class McqController {
@@ -10,6 +11,9 @@ export class McqController {
 
   @Post()
   create(@Body() createMcqDto: CreateMcqDto) {
+    if (!createMcqDto.answer && !createMcqDto.option1 && !createMcqDto.option2 && !createMcqDto.option3 && !createMcqDto.option4 && !createMcqDto.question && !createMcqDto.question_number && !createMcqDto.time && !createMcqDto.points) {
+      return errorMessage('BAD_REQUEST', 'Some fields are messing.')
+    }
     return this.mcqService.create({ ...createMcqDto, mcq_id: uuid.v4() });
   }
 
