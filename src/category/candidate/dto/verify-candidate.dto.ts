@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, Max, Min } from "class-validator";
 
-export class CreateCandidateDto {
+export class VerifyCandidateDto {
     candidate_id: string;
 
     @IsNotEmpty()

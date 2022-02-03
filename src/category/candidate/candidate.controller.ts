@@ -4,14 +4,20 @@ import { CandidateService } from './candidate.service';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
 import { InviteCandidateDto } from './dto/invite-candidate.dto';
 import { StartTestDto } from './dto/start-test.dto';
+import { VerifyCandidateDto } from './dto/verify-candidate.dto';
 
 @Controller('candidate')
 export class CandidateController {
   constructor(private readonly candidateService: CandidateService) { }
 
-  @Post()
+  @Post('add')
   create(@Body() createCandidateDto: CreateCandidateDto) {
     return this.candidateService.create(createCandidateDto);
+  }
+
+  @Post('verify')
+  verify(@Body() verifyCandidateDto: VerifyCandidateDto) {
+    return this.candidateService.verifyCandidate(verifyCandidateDto);
   }
 
   @Get(':candidate_id/:admin_id')
