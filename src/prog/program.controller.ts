@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { errorMessage } from 'src/error';
+import { CreateProgramDto, CreateProgramResponseDto } from './dto/create_program.dto';
 import { Program } from './program.entity';
 import { ProgramService } from './program.service';
 
@@ -8,7 +9,7 @@ export class ProgramController {
   constructor(private readonly progService: ProgramService) { }
 
   @Post('/add')
-  addProg(@Body() prog: Program): Promise<any> {
+  addProg(@Body() prog: CreateProgramDto): Promise<CreateProgramResponseDto> {
     if (!prog.input && !prog.output && !prog.points && !prog.question && !prog.time) return errorMessage('BAD_REQUEST', 'Some fields are missing!')
     return this.progService
       .createProg(prog).then(res => { return res }).catch(err => { return err });

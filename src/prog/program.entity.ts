@@ -1,4 +1,5 @@
 import { Auth } from 'src/auth/auth.entity';
+import { Test } from 'src/test/entities/test.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
@@ -22,7 +23,7 @@ export class Program {
   @Column({ type: 'int', nullable: false })
   points: number;
 
-  @ManyToOne(() => Auth)
-  @JoinColumn({ name: 'user_id' })
-  user_id: string
+  @ManyToOne(() => Test)
+  @JoinColumn({ name: 'contest_id' })
+  contest_id: string
 }

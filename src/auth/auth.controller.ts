@@ -29,8 +29,7 @@ export class AuthController {
       })
       .then((res) => {
         console.log(res);
-
-        return { user_id: res[0].user_id };
+        return { admin_id: res[0].admin_id };
       })
       .catch((err) => {
         return { err };

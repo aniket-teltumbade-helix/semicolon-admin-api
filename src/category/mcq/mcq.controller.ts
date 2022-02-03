@@ -11,9 +11,6 @@ export class McqController {
 
   @Post()
   create(@Body() createMcqDto: CreateMcqDto) {
-    if (!createMcqDto.answer && !createMcqDto.option1 && !createMcqDto.option2 && !createMcqDto.option3 && !createMcqDto.option4 && !createMcqDto.question && !createMcqDto.question_number && !createMcqDto.time && !createMcqDto.points) {
-      return errorMessage('BAD_REQUEST', 'Some fields are messing.')
-    }
     return this.mcqService.create({ ...createMcqDto, mcq_id: uuid.v4() });
   }
 
@@ -23,9 +20,9 @@ export class McqController {
     return this.mcqService.bulkCreate(createMcqArray);
   }
 
-  @Get(':user_id/:mcq_id')
-  findOne(@Param('user_id') user_id: string, @Param('mcq_id') mcq_id) {
-    return this.mcqService.findOne(user_id, mcq_id);
+  @Get(':contest_id/:mcq_id')
+  findOne(@Param('contest_id') contest_id: string, @Param('mcq_id') mcq_id) {
+    return this.mcqService.findOne(contest_id, mcq_id);
   }
 
   @Get('delete/:mcq_id')
@@ -33,8 +30,8 @@ export class McqController {
     return this.mcqService.delete(mcq_id);
   }
 
-  @Get('byuser/:user_id')
-  getAllMcqsByUser(@Param('user_id') user_id: string) {
-    return this.mcqService.getAllByUsers(user_id)
+  @Get('byuser/:contest_id')
+  getAllMcqsByUser(@Param('contest_id') contest_id: string) {
+    return this.mcqService.getAllByUsers(contest_id)
   }
 }

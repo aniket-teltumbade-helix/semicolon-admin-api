@@ -18,7 +18,7 @@ export class AuthService {
 
   createUser(user) {
     if (user.email && user.password) {
-      user = { user_id: uuid.v4(), ...user };
+      user = { admin_id: uuid.v4(), ...user };
       return this.usersRepository.save(user)
     }
     else {

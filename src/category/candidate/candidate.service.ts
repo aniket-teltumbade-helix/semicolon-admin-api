@@ -7,6 +7,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { errorMessage } from 'src/error';
+import { UpdateCandidateDto } from './dto/update-candidate.dto';
 
 @Injectable()
 export class CandidateService {
@@ -22,15 +23,54 @@ export class CandidateService {
   ) { }
 
   create(createCandidateDto: any) {
-    let createCandidateWithId = { ...createCandidateDto, candidate_id: uuid.v4() }
-    return this.candidateRepository.save(createCandidateWithId).then(res => { return res }).catch(err => { return err });
+    let createCandidateWithId = { ...createCandidateDto, candidate_id: uuid.v4(), pin: Math.floor(100000 + Math.random() * 900000) }
+    if (!createCandidateDto.email && createCandidateDto.email !== '') return errorMessage('BAD_REQUEST', 'Email is required');
+    return this.candidateRepository.save(createCandidateWithId).then(res => {
+      return this.mailerService.sendMail({
+        to: res.email,
+        from: 'noreply@helixstack.in',
+        subject: 'Helix Contest Invitation',
+        template: 'newcandidate',
+        context: {
+          name: res.name,
+          pin: res.pin
+        },
+      }).then(resMail => {
+        return { messageId: resMail.messageId };
+      }).catch(resErr => console.log(resErr))
+    }).catch(err => { return err });
   }
 
-  findOne(candidate_id: string, user_id: string) {
-    return this.candidateRepository.findOne({ where: { candidate_id: candidate_id, user_id: user_id } }).then(res => { return res }).catch(err => { return err });
+  verifyCandidate(verifyCandidate: UpdateCandidateDto) {
+    return this.candidateRepository
+      .findOne({ where: { email: verifyCandidate.email } })
+      .then(res => {
+        if (res && res.pin) {
+          return this.candidateRepository
+            .update({ email: res.email }, { pin: null })
+            .then(res => res)
+            .catch(err => err)
+        }
+        else {
+          return errorMessage('NOT_FOUND', 'Pin is invalid')
+        }
+      })
+
+  }
+
+  findOne(candidate_id: string, admin_id: string) {
+    if (!candidate_id && candidate_id !== '' && !admin_id && admin_id !== '') return errorMessage('BAD_REQUEST', 'candidate_id and admin_id is required!')
+    return this.candidateRepository
+      .findOne({ where: { candidate_id: candidate_id, admin_id: admin_id } })
+      .then(res => { return res })
+      .catch(err => { return err });
   }
   delete(candidate_id: string) {
-    return this.candidateRepository.delete({ candidate_id }).then(res => { return res }).catch(err => { return err });
+    if (!candidate_id && candidate_id !== '') return errorMessage('BAD_REQUEST', 'candidate_id is required!')
+    return this.candidateRepository
+      .delete({ candidate_id })
+      .then(res => { return res })
+      .catch(err => { return err });
   }
 
   invite(candidate_id: string, test_id: string, origin: string, route: string) {

@@ -23,7 +23,7 @@ export class ProgramService {
   findProg(prog_id) {
     return this.progRepository.findOne({ where: { prog_id } }).then(res => { return res }).catch(err => { return err });
   }
-  deleteProg(prog_id, user_id) {
-    return this.progRepository.delete({ prog_id, user_id }).then(res => { return res }).catch(err => { return err });
+  deleteProg(prog_id, contest_id) {
+    return this.progRepository.delete({ prog_id, contest_id }).then(res => { return res }).catch(err => { return err });
   }
 }

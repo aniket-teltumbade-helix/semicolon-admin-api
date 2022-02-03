@@ -15,10 +15,10 @@ export class Invite {
     visited: boolean;
 
     @ManyToOne(() => Candidate)
-    @JoinColumn({ name: 'candidate_id' })
-    candidate_id: string;
+    @JoinColumn({ name: 'email' })
+    email: string;
 
     @ManyToOne(() => Auth)
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'admin_id' })
     test_id: string;
 }

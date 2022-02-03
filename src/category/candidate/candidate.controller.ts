@@ -14,9 +14,9 @@ export class CandidateController {
     return this.candidateService.create(createCandidateDto);
   }
 
-  @Get(':candidate_id/:user_id')
-  findOne(@Param('candidate_id') candidate_id: string, @Param('user_id') user_id: string) {
-    return this.candidateService.findOne(candidate_id, user_id);
+  @Get(':candidate_id/:admin_id')
+  findOne(@Param('candidate_id') candidate_id: string, @Param('admin_id') admin_id: string) {
+    return this.candidateService.findOne(candidate_id, admin_id);
   }
 
   @Post('delete/:candidate_id')

@@ -1,5 +1,5 @@
 import { Auth } from 'src/auth/auth.entity';
-import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Candidate {
@@ -10,14 +10,17 @@ export class Candidate {
     @Column({ type: 'varchar', nullable: false })
     name: string;
 
-    @Column({ type: 'varchar', nullable: false })
+    @Column({ type: 'varchar', nullable: false, unique: true })
     email: string;
 
-    @Column({ type: 'int', nullable: false })
-    number: number;
-
-    @ManyToOne(() => Auth, auth => auth.user_id)
     @Column({ type: 'varchar', nullable: false })
-    user_id: Auth
+    contact: string;
+
+    @Column({ type: 'int', nullable: true })
+    pin: number;
+
+    @ManyToOne(() => Auth)
+    @JoinColumn({ name: 'admin_id' })
+    admin_id: string
 
 }

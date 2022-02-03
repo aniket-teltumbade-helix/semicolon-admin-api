@@ -14,12 +14,22 @@ export class McqService {
   ) { }
 
   create(createMcqDto: any) {
+    if (!createMcqDto.answer &&
+      !createMcqDto.a &&
+      !createMcqDto.b &&
+      !createMcqDto.c &&
+      !createMcqDto.d &&
+      !createMcqDto.question &&
+      !createMcqDto.question_number &&
+      !createMcqDto.points) {
+      return errorMessage('BAD_REQUEST', 'Some fields are missing.')
+    }
     return this.mcqRepository.save(createMcqDto).then(res => { return res }).catch(err => { return err });
   }
 
-  findOne(user_id: string, mcq_id: string) {
-    if ((!user_id || user_id === '') && (!mcq_id || mcq_id === '')) return errorMessage('BAD_REQUEST', 'user_id and mcq_id required!');
-    return this.mcqRepository.findOne({ where: { user_id: user_id, mcq_id: mcq_id } }).then(res => { return res }).catch(err => { return err });
+  findOne(contest_id: string, mcq_id: string) {
+    if ((!contest_id || contest_id === '') && (!mcq_id || mcq_id === '')) return errorMessage('BAD_REQUEST', 'contest_id and mcq_id required!');
+    return this.mcqRepository.findOne({ where: { contest_id: contest_id, mcq_id: mcq_id } }).then(res => { return res }).catch(err => { return err });
   }
 
   bulkCreate(createMcqsDto: any) {
@@ -32,8 +42,8 @@ export class McqService {
     return this.mcqRepository.delete({ mcq_id }).then(res => { return res }).catch(err => { return err });
   }
 
-  getAllByUsers(user_id: string) {
-    if (!user_id || user_id === '') return errorMessage('BAD_REQUEST', 'user_id is required!');
-    return this.mcqRepository.find({ where: { user_id: user_id } }).then(res => { return res }).catch(err => { return err });
+  getAllByUsers(contest_id: string) {
+    if (!contest_id || contest_id === '') return errorMessage('BAD_REQUEST', 'contest_id is required!');
+    return this.mcqRepository.find({ where: { contest_id: contest_id } }).then(res => { return res }).catch(err => { return err });
   }
 }

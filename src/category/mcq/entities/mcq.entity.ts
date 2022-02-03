@@ -1,4 +1,5 @@
 import { Auth } from 'src/auth/auth.entity';
+import { Test } from 'src/test/entities/test.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
@@ -14,27 +15,24 @@ export class Mcq {
     question: string;
 
     @Column({ type: 'varchar', nullable: false })
-    option1: string;
+    a: string;
 
     @Column({ type: 'varchar', nullable: false })
-    option2: string;
+    b: string;
 
     @Column({ type: 'varchar', nullable: false })
-    option3: string;
+    c: string;
 
     @Column({ type: 'varchar', nullable: false })
-    option4: string;
+    d: string;
 
     @Column({ type: 'varchar', nullable: false })
     answer: string;
 
     @Column({ type: 'int', nullable: false })
-    time: number;
-
-    @Column({ type: 'int', nullable: false })
     points: number;
 
-    @ManyToOne(() => Auth)
-    @JoinColumn({ name: 'user_id' })
-    user_id: string
+    @ManyToOne(() => Test)
+    @JoinColumn({ name: 'contest_id' })
+    contest_id: string
 }

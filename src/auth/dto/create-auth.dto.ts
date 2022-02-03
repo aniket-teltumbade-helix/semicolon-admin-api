@@ -1,7 +1,11 @@
+import { IsEmail } from "class-validator";
+
 export class CreateAuthDTO {
-  username: string;
-  password: string;
-  email: string;
-  first_name: string;
+  name: string;
   last_name: string;
+
+  @IsEmail()
+  email: string;
+
+  password: string;
 }

@@ -1,9 +1,8 @@
 export class SingleAuthDto {
-    id: number;
-    username: string;
+    name: string;
     password: string;
     email: string;
-    first_name: string;
     last_name: string;
-    user_id: string;
+    admin_id: string;
+    test_name: string;
 }
