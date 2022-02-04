@@ -1,4 +1,3 @@
-import { Auth } from 'src/auth/auth.entity';
 import { Test } from 'src/test/entities/test.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 

@@ -26,5 +26,8 @@ export class CreateMcqDto {
     @IsNotEmpty()
     @IsNumber()
     points: number;
+
+    @IsNotEmpty()
+    contest_id: string;
 }
 

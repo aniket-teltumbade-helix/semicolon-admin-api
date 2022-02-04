@@ -16,8 +16,7 @@ export class McqController {
 
   @Post('bulk-create')
   bulkCreate(@Body() createMcqsDto: CreateMcqsDto) {
-    let createMcqArray = createMcqsDto.mcqs.map(el => { return { ...el, mcq_id: uuid.v4() } });
-    return this.mcqService.bulkCreate(createMcqArray);
+    return this.mcqService.bulkCreate(createMcqsDto);
   }
 
   @Get('delete/:mcq_id')

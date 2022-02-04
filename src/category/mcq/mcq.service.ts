@@ -3,7 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { errorMessage } from 'src/error';
 import { Repository } from 'typeorm';
 import { CreateMcqDto } from './dto/create-mcq.dto';
+import { CreateMcqsDto } from './dto/create-mcqs.dto';
 import { Mcq } from './entities/mcq.entity';
+import * as uuid from 'uuid';
 
 
 @Injectable()
@@ -32,10 +34,16 @@ export class McqService {
     return this.mcqRepository.findOne({ where: { contest_id: contest_id, mcq_id: mcq_id } }).then(res => { return res }).catch(err => { return err });
   }
 
-  bulkCreate(createMcqsDto: any) {
-    for (let i = 0; i < createMcqsDto.length; i++) {
-      return this.mcqRepository.save(createMcqsDto[i]).then(res => { return res }).catch(err => { return err });
+  async bulkCreate(createMcqsDto: CreateMcqsDto) {
+    let resArray = []
+    for (let i = 0; i < createMcqsDto.mcqs.length; i++) {
+      try {
+        resArray.push(await this.mcqRepository.save({ ...createMcqsDto.mcqs[i], mcq_id: uuid.v4() }))
+      } catch (error) {
+        resArray.push(error)
+      }
     }
+    return resArray
   }
   delete(mcq_id: string) {
     if (!mcq_id || mcq_id === '') return errorMessage('BAD_REQUEST', 'mcq_id is required!');
