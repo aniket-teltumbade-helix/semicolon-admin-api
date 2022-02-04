@@ -15,7 +15,7 @@ export class TestService {
     @InjectRepository(Auth)
     private usersRepository: Repository<Auth>,
 
-    @InjectRepository(Auth)
+    @InjectRepository(Test)
     private contestRepository: Repository<Test>,
   ) { }
 
