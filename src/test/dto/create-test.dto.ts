@@ -1,14 +1,10 @@
-import { IsEmpty, IsNumber, Min } from "class-validator";
+import { IsNotEmpty, IsNumber, Min } from "class-validator";
 
 export class CreateTestDto {
-
-    @IsEmpty()
+    @IsNotEmpty()
     admin_id: string;
 
-    @IsEmpty()
-    contest_id: string;
-
     @IsNumber()
-    @Min(300)
+    @Min(30)
     duration: number;
 }

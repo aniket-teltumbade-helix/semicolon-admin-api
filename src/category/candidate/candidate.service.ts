@@ -55,7 +55,6 @@ export class CandidateService {
           return errorMessage('NOT_FOUND', 'Pin is invalid')
         }
       })
-
   }
 
   findOne(candidate_id: string, admin_id: string) {

@@ -14,7 +14,6 @@ export class TestController {
 
   @Post('create')
   create(@Body() createTest: CreateTestDto) {
-    return this.testService.create(createTest)
+    return this.testService.create(createTest).then(res => res).catch(err => err)
   }
-
 }

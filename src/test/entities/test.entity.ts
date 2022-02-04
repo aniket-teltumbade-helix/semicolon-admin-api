@@ -7,9 +7,6 @@ export class Test {
     @PrimaryColumn()
     contest_id: string;
 
-    @Column({ type: 'varchar' })
-    type: string;
-
     @Column({ type: 'int' })
     duration: number;
 

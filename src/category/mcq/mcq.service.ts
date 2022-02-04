@@ -44,6 +44,6 @@ export class McqService {
 
   getAllByUsers(contest_id: string) {
     if (!contest_id || contest_id === '') return errorMessage('BAD_REQUEST', 'contest_id is required!');
-    return this.mcqRepository.find({ where: { contest_id: contest_id } }).then(res => { return res }).catch(err => { return err });
+    return this.mcqRepository.find({ where: { contest_id: contest_id } }).then(res => res).catch(err => err);
   }
 }
