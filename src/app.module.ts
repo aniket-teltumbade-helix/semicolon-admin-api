@@ -15,6 +15,7 @@ import { Mcq } from './category/mcq/entities/mcq.entity';
 import { Program } from './prog/program.entity';
 import { Invite } from './category/candidate/entities/invite.entity';
 import { databaseProviders } from './database/database.provider';
+import { TestCasesModule } from './test-cases/test-cases.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { databaseProviders } from './database/database.provider';
     CategoryModule,
     TestModule,
     TypeOrmModule.forFeature([Auth, Candidate, Mcq, Program, Invite]),
-    databaseProviders
+    databaseProviders,
+    TestCasesModule
   ],
   controllers: [AppController],
   providers: [AppService],
