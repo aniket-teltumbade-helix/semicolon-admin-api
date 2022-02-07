@@ -25,8 +25,8 @@ export class McqController {
   }
 
   @Get('bycontest/:contest_id')
-  getAllMcqsByUser(@Param('contest_id') contest_id: string) {
-    return this.mcqService.getAllByUsers(contest_id)
+  getAllMcqsByContest(@Param('contest_id') contest_id: string) {
+    return this.mcqService.getByContest(contest_id)
   }
 
   @Get(':contest_id/:mcq_id')

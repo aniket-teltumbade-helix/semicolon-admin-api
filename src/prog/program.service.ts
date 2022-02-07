@@ -4,6 +4,7 @@ import * as uuid from 'uuid'
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateBulkProgram } from './dto/bulk-create-program.dto';
+import { errorMessage } from 'src/error';
 
 @Injectable()
 export class ProgramService {
@@ -38,5 +39,10 @@ export class ProgramService {
   }
   deleteProg(prog_id, contest_id) {
     return this.progRepository.delete({ prog_id, contest_id }).then(res => { return res }).catch(err => { return err });
+  }
+
+  getByContest(contest_id: string) {
+    if (!contest_id || contest_id === '') return errorMessage('BAD_REQUEST', 'contest_id is required!');
+    return this.progRepository.find({ where: { contest_id: contest_id } }).then(res => res).catch(err => err);
   }
 }

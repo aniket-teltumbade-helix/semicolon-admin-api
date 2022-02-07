@@ -50,7 +50,7 @@ export class McqService {
     return this.mcqRepository.delete({ mcq_id }).then(res => { return res }).catch(err => { return err });
   }
 
-  getAllByUsers(contest_id: string) {
+  getByContest(contest_id: string) {
     if (!contest_id || contest_id === '') return errorMessage('BAD_REQUEST', 'contest_id is required!');
     return this.mcqRepository.find({ where: { contest_id: contest_id } }).then(res => res).catch(err => err);
   }
