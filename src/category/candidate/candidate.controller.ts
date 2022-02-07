@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Request } from '@nes
 import { errorMessage } from 'src/error';
 import { CandidateService } from './candidate.service';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
+import { CreateBulkCandidate } from './dto/create.bulk.dto';
 import { InviteCandidateDto } from './dto/invite-candidate.dto';
 import { StartTestDto } from './dto/start-test.dto';
 import { VerifyCandidateDto } from './dto/verify-candidate.dto';
@@ -13,6 +14,11 @@ export class CandidateController {
   @Post('add')
   create(@Body() createCandidateDto: CreateCandidateDto) {
     return this.candidateService.create(createCandidateDto);
+  }
+
+  @Post('bulk-create')
+  bulkCreate(@Body() createBulkCandidate: CreateBulkCandidate) {
+    return this.candidateService.bulkCreate(createBulkCandidate);
   }
 
   @Post('verify')

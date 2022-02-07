@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { errorMessage } from 'src/error';
 import { UpdateCandidateDto } from './dto/update-candidate.dto';
+import { CreateBulkCandidate } from './dto/create.bulk.dto';
 
 @Injectable()
 export class CandidateService {
@@ -115,5 +116,38 @@ export class CandidateService {
       }
       else { return errorMessage('NOT_FOUND', 'Invitation link is invalid') }
     }).catch(err => err)
+  }
+
+
+
+  async bulkCreate(createBulkCandidate: CreateBulkCandidate) {
+    var resArray = []
+    for (let i = 0; i < createBulkCandidate.candidates.length; i++) {
+      try {
+        let resPin = await this.candidateRepository.save({
+          ...createBulkCandidate.candidates[i],
+          candidate_id: uuid.v4(),
+          pin: Math.floor(100000 + Math.random() * 900000)
+        })
+        try {
+          let resMail = await this.mailerService.sendMail({
+            to: resPin.email,
+            from: 'noreply@helixstack.in',
+            subject: 'Helix Contest Invitation',
+            template: 'newcandidate',
+            context: {
+              name: resPin.name,
+              pin: resPin.pin
+            },
+          })
+          resArray.push(resMail)
+        } catch (error) {
+          errorMessage('CONFLICT', 'Something went wrong!')
+        }
+      } catch (error) {
+        errorMessage('CONFLICT', 'Something went wrong!')
+      }
+    }
+    return resArray
   }
 }
