@@ -4,7 +4,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 export const mailerConfig = MailerModule.forRoot({
     transport: {
         host: process.env.MAIL_SMTP,
-        port: 587,
+        port: process.env.MAIL_PORT,
         secure: false,
         auth: {
             user: process.env.MAIL_USERNAME,
