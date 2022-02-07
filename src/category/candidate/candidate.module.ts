@@ -5,10 +5,11 @@ import { candidateProviders } from './candidate';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Candidate } from './entities/candidate.entity';
 import { Invite } from './entities/invite.entity';
+import { AwsMailerService } from 'src/aws-mailer/aws-mailer.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Candidate, Invite])],
   controllers: [CandidateController],
-  providers: [CandidateService]
+  providers: [CandidateService, AwsMailerService]
 })
 export class CandidateModule { }

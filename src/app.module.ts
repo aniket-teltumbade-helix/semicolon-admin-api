@@ -15,6 +15,7 @@ import { Mcq } from './category/mcq/entities/mcq.entity';
 import { Program } from './prog/program.entity';
 import { Invite } from './category/candidate/entities/invite.entity';
 import { databaseProviders } from './database/database.provider';
+import { AwsMailerService } from './aws-mailer/aws-mailer.service';
 
 @Module({
   imports: [
@@ -29,6 +30,6 @@ import { databaseProviders } from './database/database.provider';
     databaseProviders
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AwsMailerService],
 })
 export class AppModule { }

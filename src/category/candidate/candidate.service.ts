@@ -3,12 +3,12 @@ import { CreateCandidateDto } from './dto/create-candidate.dto';
 import { Candidate } from './entities/candidate.entity';
 import { Invite } from './entities/invite.entity';
 import * as uuid from 'uuid';
-import { MailerService } from '@nestjs-modules/mailer';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { errorMessage } from 'src/error';
 import { UpdateCandidateDto } from './dto/update-candidate.dto';
 import { CreateBulkCandidate } from './dto/create.bulk.dto';
+import { AwsMailerService } from 'src/aws-mailer/aws-mailer.service';
 
 @Injectable()
 export class CandidateService {
@@ -19,7 +19,7 @@ export class CandidateService {
     @InjectRepository(Invite)
     private inviteRepository: Repository<Invite>,
 
-    private readonly mailerService: MailerService
+    private readonly mailerService: AwsMailerService
 
   ) { }
 
@@ -27,16 +27,7 @@ export class CandidateService {
     let createCandidateWithId = { ...createCandidateDto, candidate_id: uuid.v4(), pin: Math.floor(100000 + Math.random() * 900000) }
     if (!createCandidateDto.email && createCandidateDto.email !== '') return errorMessage('BAD_REQUEST', 'Email is required');
     return this.candidateRepository.save(createCandidateWithId).then(res => {
-      return this.mailerService.sendMail({
-        to: res.email,
-        from: 'noreply@helixstack.in',
-        subject: 'Helix Contest Invitation',
-        template: 'newcandidate',
-        context: {
-          name: res.name,
-          pin: res.pin
-        },
-      }).then(resMail => {
+      return this.mailerService.sendMail(res.email, res.pin).then(resMail => {
         return { messageId: resMail.messageId };
       }).catch(resErr => console.log(resErr))
     }).catch(err => { return err });
@@ -85,16 +76,7 @@ export class CandidateService {
           invite_id: uuid.v4(),
           magic_string: uuid.v4(),
         }).then(resInvite => {
-          return this.mailerService.sendMail({
-            to: res.email,
-            from: 'noreply@helixstack.in',
-            subject: 'Helix Contest Invitation',
-            template: 'invite',
-            context: {
-              name: res.name,
-              link: route ? `${origin}/${route}/${resInvite.magic_string}` : `${origin}/${resInvite.magic_string}`
-            },
-          }).then(resMail => {
+          return this.mailerService.sendMail(resInvite.email, resInvite.magic_string).then(resMail => {
             return { test_id: resInvite.test_id, messageId: resMail.messageId };
           }).catch(resErr => console.log(resErr))
         }).catch(err => {
@@ -130,16 +112,7 @@ export class CandidateService {
           pin: Math.floor(100000 + Math.random() * 900000)
         })
         try {
-          let resMail = await this.mailerService.sendMail({
-            to: resPin.email,
-            from: 'noreply@helixstack.in',
-            subject: 'Helix Contest Invitation',
-            template: 'newcandidate',
-            context: {
-              name: resPin.name,
-              pin: resPin.pin
-            },
-          })
+          let resMail = await this.mailerService.sendMail(resPin.email, resPin.pin)
           resArray.push(resMail)
         } catch (error) {
           errorMessage('CONFLICT', 'Something went wrong!')
