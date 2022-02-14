@@ -32,6 +32,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "ejs": "^3.1.6",
+    "lint:js:fix": "npm run eslint . --ext .ts --fix",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.2",
     "reflect-metadata": "^0.1.13",
@@ -54,7 +55,9 @@
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.4",
     "jest": "^27.0.6",
+    "lint-staged": "^12.3.4",
     "prettier": "^2.3.2",
     "supertest": "^6.1.3",
     "ts-jest": "^27.0.3",
@@ -79,5 +82,16 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "lint-staged": {
+    "packages/**/*.{ts}": [
+      "npm run --silent lerna:lint:ts",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

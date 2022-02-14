@@ -18,5 +18,5 @@ export const databaseProviders = TypeOrmModule.forRoot({
   synchronize: true,
   logging: true,
   cache: true,
-  logger: "advanced-console"
-})
+  logger: 'advanced-console',
+});

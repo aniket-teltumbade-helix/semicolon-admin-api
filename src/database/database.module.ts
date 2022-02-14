@@ -5,4 +5,4 @@ import { databaseProviders } from './database.provider';
   providers: [],
   exports: [],
 })
-export class DatabaseModule { }
+export class DatabaseModule {}

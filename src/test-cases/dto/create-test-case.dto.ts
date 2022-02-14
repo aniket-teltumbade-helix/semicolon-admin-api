@@ -1,13 +1,12 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateTestCaseDto {
+  @IsNotEmpty()
+  input: string;
 
-    @IsNotEmpty()
-    input: string;
+  @IsNotEmpty()
+  output: string;
 
-    @IsNotEmpty()
-    output: string;
-
-    @IsNotEmpty()
-    program_id: string;
+  @IsNotEmpty()
+  program_id: string;
 }

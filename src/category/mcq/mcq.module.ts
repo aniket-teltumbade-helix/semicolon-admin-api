@@ -7,6 +7,6 @@ import { Mcq } from './entities/mcq.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Mcq])],
   controllers: [McqController],
-  providers: [McqService]
+  providers: [McqService],
 })
-export class McqModule { }
+export class McqModule {}

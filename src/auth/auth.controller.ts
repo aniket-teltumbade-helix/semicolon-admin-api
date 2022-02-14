@@ -7,7 +7,7 @@ import { VerifyAuthDTO } from './dto/verify-auth.dto';
 
 @Controller()
 export class AuthController {
-  constructor(private readonly usersService: AuthService) { }
+  constructor(private readonly usersService: AuthService) {}
 
   @Get('/users')
   getUsers(): Promise<Auth[]> {
@@ -15,8 +15,7 @@ export class AuthController {
   }
   @Post('/signup')
   registerUser(@Body() user: CreateAuthDTO) {
-    return this.usersService
-      .createUser(user)
+    return this.usersService.createUser(user);
   }
   @Post('/login')
   loginUser(@Body() user: VerifyAuthDTO) {

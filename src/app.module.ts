@@ -28,9 +28,9 @@ import { TestCasesModule } from './test-cases/test-cases.module';
     TestModule,
     TypeOrmModule.forFeature([Auth, Candidate, Mcq, Program, Invite]),
     databaseProviders,
-    TestCasesModule
+    TestCasesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,13 +1,11 @@
-import { IsEmail, IsMobilePhone, IsNotEmpty } from "class-validator";
+import { IsEmail, IsMobilePhone, IsNotEmpty } from 'class-validator';
 
 export class CreateCandidateDto {
-    candidate_id: string;
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
 
-    @IsNotEmpty()
-    @IsEmail()
-    email: string;
-
-    name: string;
-    contact: string;
-    admin_id: string;
+  name: string;
+  contact: string;
+  admin_id: string;
 }

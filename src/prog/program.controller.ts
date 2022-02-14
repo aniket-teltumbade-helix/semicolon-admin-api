@@ -1,21 +1,36 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { errorMessage } from 'src/error';
 import { CreateBulkProgram } from './dto/bulk-create-program.dto';
-import { CreateProgramDto, CreateProgramResponseDto } from './dto/create_program.dto';
+import {
+  CreateProgramDto,
+  CreateProgramResponseDto,
+} from './dto/create_program.dto';
 import { Program } from './program.entity';
 import { ProgramService } from './program.service';
 
 @Controller()
 export class ProgramController {
-  constructor(private readonly progService: ProgramService) { }
+  constructor(private readonly progService: ProgramService) {}
 
   @Post('/add')
   addProg(@Body() prog: CreateProgramDto): Promise<CreateProgramResponseDto> {
-    if (!prog.input && !prog.output && !prog.points && !prog.question && !prog.time) return errorMessage('BAD_REQUEST', 'Some fields are missing!')
+    if (
+      !prog.input &&
+      !prog.output &&
+      !prog.points &&
+      !prog.question &&
+      !prog.time
+    )
+      return errorMessage('BAD_REQUEST', 'Some fields are missing!');
     return this.progService
-      .createProg(prog).then(res => { return res }).catch(err => { return err });
+      .createProg(prog)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
-
 
   @Post('bulk-create')
   bulkCreate(@Body() createBulkProgram: CreateBulkProgram) {
@@ -25,21 +40,43 @@ export class ProgramController {
   @Get('/get')
   getAllProg(): Promise<any> {
     return this.progService
-      .getAllProgs().then(res => { return res }).catch(err => { return err });
+      .getAllProgs()
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 
   @Get('/get/:id')
   getProg(@Param('id') id): Promise<any> {
     return this.progService
-      .findProg(id).then(res => { return res }).catch(err => { return err });
+      .findProg(id)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
   @Get('/delete/:prog_id/:user_id')
-  deleteProg(@Param('prog_id') prog_id: string, @Param('user_id') user_id: string): Promise<any> {
-    return this.progService.deleteProg(prog_id, user_id).then(res => { return res }).catch(err => { return err });
+  deleteProg(
+    @Param('prog_id') prog_id: string,
+    @Param('user_id') user_id: string,
+  ): Promise<any> {
+    return this.progService
+      .deleteProg(prog_id, user_id)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 
   @Get('bycontest/:contest_id')
   getAllProgramsByContest(@Param('contest_id') contest_id: string) {
-    return this.progService.getByContest(contest_id)
+    return this.progService.getByContest(contest_id);
   }
 }

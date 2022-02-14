@@ -1,5 +1,5 @@
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule } from '@nestjs/config';
 
 export const envConfig = ConfigModule.forRoot({
-    envFilePath: '.development.env',
-})
+  envFilePath: '.development.env',
+});

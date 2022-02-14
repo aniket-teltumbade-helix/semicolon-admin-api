@@ -9,6 +9,6 @@ import { Invite } from './entities/invite.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Candidate, Invite])],
   controllers: [CandidateController],
-  providers: [CandidateService]
+  providers: [CandidateService],
 })
-export class CandidateModule { }
+export class CandidateModule {}

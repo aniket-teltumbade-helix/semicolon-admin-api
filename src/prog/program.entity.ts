@@ -1,6 +1,13 @@
 import { Auth } from 'src/auth/auth.entity';
 import { Test } from 'src/test/entities/test.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 
 @Entity()
 export class Program {
@@ -25,5 +32,5 @@ export class Program {
 
   @ManyToOne(() => Test)
   @JoinColumn({ name: 'contest_id' })
-  contest_id: string
+  contest_id: string;
 }

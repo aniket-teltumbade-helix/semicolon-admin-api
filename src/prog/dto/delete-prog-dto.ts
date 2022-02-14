@@ -1,4 +1,4 @@
 export class DeleleProgDto {
-    prog_id: string;
-    admin_id: string;
+  prog_id: string;
+  admin_id: string;
 }

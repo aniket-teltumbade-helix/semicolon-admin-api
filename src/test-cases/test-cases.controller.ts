@@ -5,7 +5,7 @@ import { CreateBulkTestCasesDto } from './dto/create-bulk-test-cases.dto';
 
 @Controller('test-cases')
 export class TestCasesController {
-  constructor(private readonly testCasesService: TestCasesService) { }
+  constructor(private readonly testCasesService: TestCasesService) {}
 
   @Post()
   create(@Body() createTestCaseDto: CreateTestCaseDto) {
@@ -14,11 +14,11 @@ export class TestCasesController {
 
   @Get('byprogram/:program_id')
   findByProgram(@Param('program_id') program_id: string) {
-    return this.testCasesService.findByProgram(program_id)
+    return this.testCasesService.findByProgram(program_id);
   }
 
   @Post('/bulk-create')
   createBulk(@Body() createBulkTestCasesDto: CreateBulkTestCasesDto) {
-    return this.testCasesService.createBulk(createBulkTestCasesDto)
+    return this.testCasesService.createBulk(createBulkTestCasesDto);
   }
 }

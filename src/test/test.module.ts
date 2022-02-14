@@ -9,6 +9,6 @@ import { Test } from './entities/test.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Auth, Test])],
   controllers: [TestController],
-  providers: [TestService]
+  providers: [TestService],
 })
-export class TestModule { }
+export class TestModule {}

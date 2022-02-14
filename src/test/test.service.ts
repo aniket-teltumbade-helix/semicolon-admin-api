@@ -10,27 +10,30 @@ import * as uuid from 'uuid';
 
 @Injectable()
 export class TestService {
-
   constructor(
     @InjectRepository(Auth)
     private usersRepository: Repository<Auth>,
 
     @InjectRepository(Test)
     private contestRepository: Repository<Test>,
-  ) { }
+  ) {}
 
   update(id: string, updateTestDto: UpdateTestDto) {
     return this.usersRepository
       .update({ admin_id: id }, { test_name: updateTestDto.test_name })
-      .then(res => {
+      .then((res) => {
         if (res.affected === 0) {
-          return errorMessage("UNAUTHORIZED", "Wrong Admin Id")
+          return errorMessage('UNAUTHORIZED', 'Wrong Admin Id');
         }
-        return { affected: res.affected }
-      }).catch(err => err)
+        return { affected: res.affected };
+      })
+      .catch((err) => err);
   }
 
   create(createTest: CreateTestDto) {
-    return this.contestRepository.save({ ...createTest, contest_id: uuid.v4() }).then(res => res).catch(err => err)
+    return this.contestRepository
+      .save({ ...createTest, contest_id: uuid.v4() })
+      .then((res) => res)
+      .catch((err) => err);
   }
 }

@@ -5,15 +5,21 @@ import { CreateTestDto } from './dto/create-test.dto';
 
 @Controller('test')
 export class TestController {
-  constructor(private readonly testService: TestService) { }
+  constructor(private readonly testService: TestService) {}
 
   @Patch('publish/:admin_id')
   update(@Param('admin_id') id: string, @Body() updateTestDto: UpdateTestDto) {
-    return this.testService.update(id, updateTestDto).then(res => res).catch(err => err);
+    return this.testService
+      .update(id, updateTestDto)
+      .then((res) => res)
+      .catch((err) => err);
   }
 
   @Post('create')
   create(@Body() createTest: CreateTestDto) {
-    return this.testService.create(createTest).then(res => res).catch(err => err)
+    return this.testService
+      .create(createTest)
+      .then((res) => res)
+      .catch((err) => err);
   }
 }

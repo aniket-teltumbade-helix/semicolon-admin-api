@@ -1,30 +1,29 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateProgramDto {
+  @IsNotEmpty()
+  question: string;
 
-    @IsNotEmpty()
-    question: string;
+  @IsNotEmpty()
+  input: string;
 
-    @IsNotEmpty()
-    input: string;
+  @IsNotEmpty()
+  output: string;
 
-    @IsNotEmpty()
-    output: string;
+  @IsNotEmpty()
+  time: number;
 
-    @IsNotEmpty()
-    time: number;
+  @IsNotEmpty()
+  points: number;
 
-    @IsNotEmpty()
-    points: number;
-
-    @IsNotEmpty()
-    contest_id: string;
+  @IsNotEmpty()
+  contest_id: string;
 }
 export class CreateProgramResponseDto {
-    prog_id: string;
-    input: string;
-    output: string;
-    time: number;
-    points: number;
-    contest_id: string;
+  prog_id: string;
+  input: string;
+  output: string;
+  time: number;
+  points: number;
+  contest_id: string;
 }

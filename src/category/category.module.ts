@@ -3,6 +3,6 @@ import { CandidateModule } from './candidate/candidate.module';
 import { McqModule } from './mcq/mcq.module';
 @Module({
   imports: [CandidateModule, McqModule],
-  providers: []
+  providers: [],
 })
-export class CategoryModule { }
+export class CategoryModule {}

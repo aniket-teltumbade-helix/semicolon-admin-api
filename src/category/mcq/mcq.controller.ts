@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { McqService } from './mcq.service';
 import { CreateMcqDto } from './dto/create-mcq.dto';
-import * as uuid from 'uuid'
+import * as uuid from 'uuid';
 import { CreateMcqsDto } from './dto/create-mcqs.dto';
 import { errorMessage } from 'src/error';
 
 @Controller('mcq')
 export class McqController {
-  constructor(private readonly mcqService: McqService) { }
+  constructor(private readonly mcqService: McqService) {}
 
   @Post()
   create(@Body() createMcqDto: CreateMcqDto) {
@@ -26,7 +26,7 @@ export class McqController {
 
   @Get('bycontest/:contest_id')
   getAllMcqsByContest(@Param('contest_id') contest_id: string) {
-    return this.mcqService.getByContest(contest_id)
+    return this.mcqService.getByContest(contest_id);
   }
 
   @Get(':contest_id/:mcq_id')
