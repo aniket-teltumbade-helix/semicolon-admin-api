@@ -11,7 +11,7 @@ export class JavaCompilerInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     let request = context.switchToHttp().getRequest();
     try {
-
+      var className = request.body?.script.slice(request.body?.script.indexOf("class") + 5, request.body?.script.indexOf("{")).trim()
       var dir1 = path.join(__dirname, '..', 'scripts');
       var uusidString = v4uuid()
       var dir = path.join(__dirname, '..', 'scripts', uusidString.slice(0, uusidString.indexOf("-")));
@@ -22,10 +22,11 @@ export class JavaCompilerInterceptor implements NestInterceptor {
       else {
         mkdirSync(dir);
       }
-      var fileName = path.join(dir, `Solution`)
+      var fileName = path.join(dir, className)
       writeFileSync(`${fileName}.java`, request.body?.script)
+      writeFileSync(`${fileName}.txt`, request.body?.input)
       execSync(`javac ${fileName}.java`)
-      let scriptExecution = execSync(`java -classpath ${dir} Solution`)
+      let scriptExecution = execSync(`java -classpath ${dir} ${className} <${fileName}.txt`)
       return next.handle().pipe(map(flow => flow.data = { message: scriptExecution.toString().trim() }))
 
     } catch (error) {
