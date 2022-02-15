@@ -16,9 +16,9 @@ import { InviteCandidateDto } from './dto/invite-candidate.dto';
 import { StartTestDto } from './dto/start-test.dto';
 import { VerifyCandidateDto } from './dto/verify-candidate.dto';
 
-@Controller('candidate')
+@Controller()
 export class CandidateController {
-  constructor(private readonly candidateService: CandidateService) {}
+  constructor(private readonly candidateService: CandidateService) { }
 
   @Post('add')
   create(@Body() createCandidateDto: CreateCandidateDto) {

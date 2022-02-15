@@ -16,6 +16,7 @@ import { Program } from './prog/program.entity';
 import { Invite } from './category/candidate/entities/invite.entity';
 import { databaseProviders } from './database/database.provider';
 import { TestCasesModule } from './test-cases/test-cases.module';
+import { CompilerModule } from './compiler/compiler.module';
 
 @Module({
   imports: [
@@ -29,8 +30,9 @@ import { TestCasesModule } from './test-cases/test-cases.module';
     TypeOrmModule.forFeature([Auth, Candidate, Mcq, Program, Invite]),
     databaseProviders,
     TestCasesModule,
+    CompilerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

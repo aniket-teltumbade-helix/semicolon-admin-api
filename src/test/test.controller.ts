@@ -3,9 +3,9 @@ import { TestService } from './test.service';
 import { UpdateTestDto } from './dto/update-test.dto';
 import { CreateTestDto } from './dto/create-test.dto';
 
-@Controller('test')
+@Controller()
 export class TestController {
-  constructor(private readonly testService: TestService) {}
+  constructor(private readonly testService: TestService) { }
 
   @Patch('publish/:admin_id')
   update(@Param('admin_id') id: string, @Body() updateTestDto: UpdateTestDto) {

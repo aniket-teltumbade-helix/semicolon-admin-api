@@ -5,9 +5,9 @@ import * as uuid from 'uuid';
 import { CreateMcqsDto } from './dto/create-mcqs.dto';
 import { errorMessage } from 'src/error';
 
-@Controller('mcq')
+@Controller()
 export class McqController {
-  constructor(private readonly mcqService: McqService) {}
+  constructor(private readonly mcqService: McqService) { }
 
   @Post()
   create(@Body() createMcqDto: CreateMcqDto) {

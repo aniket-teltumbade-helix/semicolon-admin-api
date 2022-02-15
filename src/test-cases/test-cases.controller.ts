@@ -3,9 +3,9 @@ import { TestCasesService } from './test-cases.service';
 import { CreateTestCaseDto } from './dto/create-test-case.dto';
 import { CreateBulkTestCasesDto } from './dto/create-bulk-test-cases.dto';
 
-@Controller('test-cases')
+@Controller()
 export class TestCasesController {
-  constructor(private readonly testCasesService: TestCasesService) {}
+  constructor(private readonly testCasesService: TestCasesService) { }
 
   @Post()
   create(@Body() createTestCaseDto: CreateTestCaseDto) {
