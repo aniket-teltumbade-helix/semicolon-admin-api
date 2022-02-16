@@ -5,6 +5,7 @@ import { McqModule } from 'src/category/mcq/mcq.module';
 import { CompilerModule } from 'src/compiler/compiler.module';
 import { JavaModule } from 'src/compiler/java/java.module';
 import { NodeModule } from 'src/compiler/node/node.module';
+import { PythonModule } from 'src/compiler/python/python.module';
 import { ProgModule } from 'src/prog/program.module';
 import { TestCasesModule } from 'src/test-cases/test-cases.module';
 import { TestModule } from 'src/test/test.module';
@@ -19,7 +20,8 @@ export const routesConfig = RouterModule.register([
   {
     path: 'compiler', module: CompilerModule, children: [
       { path: 'node', module: NodeModule },
-      { path: 'java', module: JavaModule }
+      { path: 'java', module: JavaModule },
+      { path: 'python', module: PythonModule }
     ]
   }
 ]);

@@ -10,11 +10,12 @@ import { v4 as v4uuid } from 'uuid'
 export class JavaCompilerInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     let request = context.switchToHttp().getRequest();
+
+    var dir1 = path.join(__dirname, '..', 'scripts');
+    var uusidString = v4uuid()
+    var dir = path.join(__dirname, '..', 'scripts', uusidString.slice(0, uusidString.indexOf("-")));
     try {
       var className = request.body?.script.slice(request.body?.script.indexOf("class") + 5, request.body?.script.indexOf("{")).trim()
-      var dir1 = path.join(__dirname, '..', 'scripts');
-      var uusidString = v4uuid()
-      var dir = path.join(__dirname, '..', 'scripts', uusidString.slice(0, uusidString.indexOf("-")));
       if (!existsSync(dir1)) {
         mkdirSync(dir1);
         mkdirSync(dir);
@@ -30,6 +31,7 @@ export class JavaCompilerInterceptor implements NestInterceptor {
       return next.handle().pipe(map(flow => flow.data = { message: scriptExecution.toString().trim() }))
 
     } catch (error) {
+      error = `${error}`.split(dir + '\\').join('')
       return next.handle().pipe(map(flow => flow.data = errorMessage('INTERNAL_SERVER_ERROR', `${error}`)));
     }
   }
