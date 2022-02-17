@@ -4,6 +4,7 @@ import { CandidateModule } from 'src/category/candidate/candidate.module';
 import { McqModule } from 'src/category/mcq/mcq.module';
 import { CompilerModule } from 'src/compiler/compiler.module';
 import { GccModule } from 'src/compiler/gcc/gcc.module';
+import { GppModule } from 'src/compiler/gpp/gpp.module';
 import { JavaModule } from 'src/compiler/java/java.module';
 import { NodeModule } from 'src/compiler/node/node.module';
 import { PythonModule } from 'src/compiler/python/python.module';
@@ -24,6 +25,7 @@ export const routesConfig = RouterModule.register([
       { path: 'java', module: JavaModule },
       { path: 'python', module: PythonModule },
       { path: 'gcc', module: GccModule },
+      { path: 'gpp', module: GppModule },
     ]
   }
 ]);
