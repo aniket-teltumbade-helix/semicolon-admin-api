@@ -29,7 +29,7 @@ export class PythonCompilerInterceptor implements NestInterceptor {
         return next.handle().pipe(map(flow => flow.data = { message: scriptExecution.stdout.toString().trim() }))
       } else {
         let error = scriptExecution.stderr.toString().trim().replace(fileName, 'Solution.py')
-        return next.handle().pipe(map(flow => flow.data = errorMessage('INTERNAL_SERVER_ERROR', error)))
+        return next.handle().pipe(map(flow => flow.data = errorMessage('ACCEPTED', error)))
       }
     } catch (error) {
       error = error.replace(fileName, 'Python.py')

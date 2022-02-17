@@ -26,7 +26,7 @@ export class NodeCompilerInterceptor implements NestInterceptor {
         return next.handle().pipe(map(flow => flow.data = { message: scriptExecution.stdout.toString().trim() }))
       } else {
         let error = scriptExecution.stderr.toString().trim().replace(`${dir}\\${vid}`, 'index')
-        return next.handle().pipe(map(flow => flow.data = errorMessage('INTERNAL_SERVER_ERROR', error)))
+        return next.handle().pipe(map(flow => flow.data = errorMessage('ACCEPTED', error)))
       }
     } catch (error) {
       error = error.replace(`${dir}\\${vid}`, 'index')

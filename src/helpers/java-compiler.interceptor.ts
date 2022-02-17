@@ -2,7 +2,7 @@ import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nes
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import * as path from 'path';
 import { map, Observable } from 'rxjs';
-import { execSync, spawnSync } from 'child_process';
+import { execSync } from 'child_process';
 import { errorMessage } from 'src/error';
 import { v4 as v4uuid } from 'uuid'
 
