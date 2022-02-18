@@ -17,6 +17,7 @@ import { Invite } from './category/candidate/entities/invite.entity';
 import { databaseProviders } from './database/database.provider';
 import { TestCasesModule } from './test-cases/test-cases.module';
 import { CompilerModule } from './compiler/compiler.module';
+import { SubmitModule } from './submit/submit.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CompilerModule } from './compiler/compiler.module';
     databaseProviders,
     TestCasesModule,
     CompilerModule,
+    SubmitModule,
   ],
   controllers: [AppController],
   providers: [AppService],
