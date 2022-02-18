@@ -5,6 +5,7 @@ import { spawnSync } from 'child_process';
 import { errorMessage } from 'src/error';
 import { v4 as v4uuid } from 'uuid'
 import { map, Observable } from 'rxjs';
+import * as precise from 'precise'
 
 @Injectable()
 export class GppInterceptor implements NestInterceptor {
@@ -26,16 +27,19 @@ export class GppInterceptor implements NestInterceptor {
       var fileName = path.join(dir, className)
       writeFileSync(`${fileName}.cpp`, request.body?.script)
       // writeFileSync(`${fileName}.txt`, )
-      request.body?.input
       let scriptCompile = spawnSync('gcc', [`${fileName}.cpp`, '-lstdc++', '-o', fileName], {
-        timeout: 5000
       })
 
       if (scriptCompile.status === 0) {
+        let timer = precise().start()
         let scriptExecution = spawnSync(fileName, {
           input: request.body?.input,
-          timeout: 1000
         })
+        if (timer.stop().diff() / 1000000 > 30) {
+          return next.handle().pipe(map(flow => flow.data = errorMessage('ACCEPTED', "Time limit exceeded")))
+        }
+
+
         if (scriptExecution.status === 0) {
           return next.handle().pipe(map(flow => flow.data = { message: scriptExecution.stdout.toString().trim() }))
         } else {

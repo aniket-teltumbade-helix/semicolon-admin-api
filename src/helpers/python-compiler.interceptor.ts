@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 import { spawnSync } from 'child_process';
 import { errorMessage } from 'src/error';
 import { v4 as v4uuid } from 'uuid';
+import * as precise from 'precise'
 
 @Injectable()
 export class PythonCompilerInterceptor implements NestInterceptor {
@@ -20,10 +21,13 @@ export class PythonCompilerInterceptor implements NestInterceptor {
 
 
       writeFileSync(fileName, request.body?.script)
+      let timer = precise().start()
       const scriptExecution = spawnSync('python', [fileName], {
-        input: request.body?.input,
-        timeout: 3000
+        input: request.body?.input
       })
+      if (timer.stop().diff() / 1000000 > 30) {
+        return next.handle().pipe(map(flow => flow.data = errorMessage('ACCEPTED', "Time limit exceeded")))
+      }
       if (scriptExecution.status === 0) {
 
         return next.handle().pipe(map(flow => flow.data = { message: scriptExecution.stdout.toString().trim() }))
